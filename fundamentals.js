@@ -251,3 +251,4 @@ delete self.location;
 let myAge = self.age
 console.log(myAge);
 
+// Adding something 
