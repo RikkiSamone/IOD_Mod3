@@ -428,14 +428,19 @@ const exampleMap = new Map() // create new empty map object
 console.log(exampleMap.size) // 4 - number of items in the map
 console.log(exampleMap)
 // Map(4) { 1 => 'number one', '1' => 'second string one', true => 'true', { name: 'John' } => { phone: '0412345678' } }
-          
-
+        
 
 // map.get(key): returns the value with the matching key
 // map.has(key): returns true if key exists
 // map.delete(key): removes the value with matching key
 // map.clear() removes everything from the map
-    
+
+console.log(exampleMap.get('1')) // second string one - gets value for matching key
+console.log( exampleMap.get(2) ) // undefined - key doesn't exist so no value
+console.log( exampleMap.has(1) ) // true - key does exist
+console.log( exampleMap.delete(true) ) // true - removes item and returns true if successful
+exampleMap.clear() // removes all items from map
+console.log( exampleMap ) // Map(0) {}
 
 
 
@@ -444,3 +449,291 @@ console.log(exampleMap)
 // map.keys(): returns an iterable for keys
 // map.values(): returns an iterable for values
 // map.entries(): return an iterable for entries (key, value). used by default in for...of loops. 
+
+const recipeMap = new Map([
+    ['flour', '1 cup'],
+    ['milk', '1/2 cup'],
+    ['eggs', 2],
+    ['butter', '50g']
+])
+for (let ingredient of recipeMap.keys()) {
+    console.log(ingredient) // flour, milk, eggs, butter
+}
+for (let quantity of recipeMap.values()) {
+    console.log(quantity) // 1 cup, 1/2 cup, 2, 50g
+}
+for (let item of recipeMap) { // same as recipeMap.entries()
+    console.log(item) // ['flour', '1 cup'], (and so on)
+}
+
+// Conversions with Object; 
+// Maps to Objects: create object from map.entries(). Since objects and maps are similar, they can convert from one to another. 
+    
+const priceMap = new Map([
+    ['banana', 1],
+    ['pineapple', 2],
+    ['watermelon', 5]
+])
+const priceObject = Object.fromEntries(priceMap)
+console.log(priceObject) // { banana: 1, pineapple: 2, watermelon: 5 }
+
+// Reverse: Objects to maps
+const priceObject1 = { banana: 1, pineapple: 2, watermelon: 5 }
+const priceMap1 = new Map( Object.entries(priceObject1) )
+console.log(priceMap1) // Map(3) { 'banana' => 1, 'pineapple' => 2, 'watermelon' => 5 }
+console.log(priceMap1.get('banana')) // 1
+
+// Maps:versatile, efficient data structure for managing key-value data: 
+    // Advantages over objects and arrays:  
+        // Speed: faster for adding,seatchingg, and deleting data
+        // Flexibility: allows any data type as a key inclufing ojects and functions, unlie basic objects
+        // Useful methods: built in methods like has, get, and forEach simplify data handling
+    
+// Simulate fetching external data, which can be slow
+function fetchExternalData(id) {
+    console.log(`Fetching data for ID: ${id}`);
+    const data = `Data for ID: ${id}`; // Simulated data
+    return data;
+}
+// Create a Map for caching
+const cache = new Map();
+function getCachedData(id) {
+    // Check if data is already in the cache
+    if (cache.has(id)) {
+        return cache.get(id); // return cached value, no expensive lookup
+    }
+    // If not in cache, fetch "external" data and store in cache for next time
+    const data = fetchExternalData(id);
+    cache.set(id, data);
+    return data;
+}
+// Example usage
+console.log('#1: ' + getCachedData(1)); // First time: fetches "external" data and caches result
+console.log('#2: ' + getCachedData(1)); // Other times: can fetch result from cache, much faster
+
+
+// Set:  a special type of collection: a "set of values" (without keys) where each value is unique and occur only once
+// newSet(iterable): creates the set and if iterable object is provided; copies calues from it into the set
+// set.add(value): adds a value, returns the set itself
+// set.size: element count
+const names = new Set(['Pedro', 'Oliver', 'Jack', 'Mateo'])
+names.add('Mateo')
+names.add('Oliver')
+names.add('Bruno')
+console.log(names.size) // 5 - only the unique namesconsole.log(names) // Set(5) { 'Pedro', 'Oliver', 'Jack', 'Mateo', 'Bruno'
+
+// set.delete(value): removes the value, returns true if value existed at the moment of  calling
+// set.has(value): returns true if the value exists in the set, otherwise false
+// set.clear(): removes anything from the set
+const names1 = new Set(['Pedro', 'Oliver', 'Jack', 'Mateo'])
+console.log( names1.delete('Jack') ) // true - successful delete
+console.log( names1.has('Jack') ) // false - Jack no longer exists in set
+console.log( names1.has('Mateo') ) // true - Mateo does exist in set
+names1.clear()
+console.log(names1) // Set(0) {}
+
+// Iteration over Set: Loop over items in a set either with for...of or using forEach.
+const names2 = new Set(['Pedro', 'Oliver', 'Jack', 'Mateo'])
+// traditional style of for loop - works because Sets are iterable
+for (let name of names2) {
+    console.log(name)
+}
+// more concise for simple operations, newer syntax using arrow function
+names2.forEach(name => console.log(name))
+
+
+// Sets: powerful, efficient data structure in JS for managing collections of unique values. Providing several advantages over regular arrays
+// Uniqueness:
+// Efficiency: 
+// Useful Methods: 
+
+
+//Efficient Algorithms: 
+
+// 1. Time Complexity; Big O Notation: formula capturing the order of complexiy that shows how much longer an algorithm takes as the amount of data it handles increases. 
+    // O(1): constant time; accessing an aarray element
+    // O(n): linear time, like iterating through an array
+        // O(n^2): Quadrativ time, like nested loops (to be avoided)
+
+// 2: Space Complexity: As well as being aware of how long your code will take to run, we also want to control how much memory an algorithm uses as the input size grows.
+
+// 3: Avoiding Unnecessary Operations: Efficient algorithms aim to minimize redundant work, like checking the same value multiple times or recalculating results, which saves both time and space.
+
+// 4: Using Built in Methods; built-in methods like map and filter are optimized for efficiency.
+
+// 5: Choosing the Right data structure: efficiency of an algorithm can depend on the data structure used, so think about what kind of data you need to manage and choose appropriately.
+
+// 6: Early Exits: Exiting or returning from loops/functions as soon as a result is found will save time.
+//  Why it matters: Reduces unnecessary processing.
+        
+
+// Destructuring Assignment: special syntax that allows us to unpack arrays or objects into a bunch of variables
+
+// destructures by copying items into variables
+const mj = ['Michael', 'Jordan']
+const [mjFirst, mjLast] = mj // destructure (unpack) array on right into separate variables on left
+console.log(mjFirst, mjLast) // Michael Jordan
+
+// Ignores elements using commas
+const [jcFirst, jcLast, , , jcPlace] = ['Julius', 'Caesar', 'Consul', 'of the', 'Roman', 'Republic']
+console.log(`${jcFirst} ${jcLast} is a ${jcPlace}`) // Julius Caesar is a Roman
+
+// works with any iterable on the right-side: 
+const [x, y, z] = "xyz" // strings are iterable, so can break into characters
+const [ one, two, three ] = new Set([1, 2, 3]) // Sets are iterable, so can be destructured
+const [ [type, quantity] ] = new Map([ ['apple', 4] ]) // Maps are iterable too
+// now we have 8 individual variables: x, y, z, one, two, three, type, quantity
+console.log(x, y, z, one, two, three, type, quantity) // a b c 1 2 3 apple 4
+
+
+// assigns anything at the left side:
+const monarch = {}; // empty object
+[ monarch.title, monarch.name ] = "King Charles".split(' '); // store array pieces in object properties
+console.log(monarch); // { title: 'King', name: 'Charles' }
+
+// when looping with .entries() we can destructure into key and value variables
+const teeProduct = { id: 1, title: 'Sleeveless Tee', price: 23.95, category: 'Shirts' }
+// key and value are just variable names, could be anything
+for (let [key, value] of Object.entries(teeProduct)) {
+    console.log(`${key}: ${value}`) // id: 1, title: Sleeveless Tee, price: 23.95 ...
+}
+
+// swap variables trick
+let student = 'James', teacher = 'Andrew';
+[student, teacher] = [teacher, student]
+console.log(student) // Andrew
+console.log(teacher) // James
+
+
+// array rest...
+// usually if the array is longer than the list at the left the extra items are omitted, if want to capture them, add thre dots ...
+const [jcFirst1, jcLast1, ...jcTitles1] = ['Julius', 'Caesar', 'Consul', 'of the', 'Roman', 'Republic']
+console.log( jcTitles1 ) // [ 'Consul', 'of the', 'Roman', 'Republic' ]
+console.log(jcTitles1.length) // 4
+
+// Object Destructuring: objects can also be destructured but use curly brackets instead of square brackets: 
+// existing object at the right side can be split into variables. 
+
+// property names (keys) on right are matched to variable names on left
+let { width, height, title } = { title: 'My Component', height: 100, width: 200 } 
+console.log(width, height, title) // 200 100 My Component
+
+
+// Object Destructuring
+
+// smart function parameters: pass paramaters as an object and the function immediately destructures them into variables
+function displayComponent({height = 200, width = 100, title}) {         //default values
+    console.log(`<div style="width:${width}px; height:${height}px"><h2>${title}</h2></div>`)
+}
+
+// these values will replace the default values
+displayComponent({width:200, title:'My Awesome Component'})
+displayComponent({title:'My Amazing Component'})
+displayComponent({width:300, height:300, title:'My Average Component'})
+
+
+// Object Rest Pattern ...
+let options = { width: 200, height: 100, title: 'My Component' }
+let { title4, ...rest } = options
+console.log(title4) // My Component
+console.log(rest) // { width: 200, height: 100 }
+
+
+// Date and Time
+        // epoch time: Jan 1, 1970 UTC
+// creation: 
+// without arguments, the date constructor creates a new date for the current time. 
+    const now = new Date()
+console.log( now ) // 2023-03-26T11:45:59.096Z
+console.log(+now) // 1679832116638 - number of milliseconds since epoch
+
+// a single argument newDate(milliseconds), creates a date object with the time equal to number of ms after the epoch
+const epoch = new Date(0) // 0 milliseconds since Jan 1 1970
+const jan2_1970 = new Date(1000 * 60 * 60 * 24) // a full day in milliseconds after Jan 1
+console.log(epoch) // 1970-01-01T00:00:00.000Z
+console.log(jan2_1970) // 1970-01-02T00:00:00.000Z
+
+
+// new Date(datestring) parses a string into a Date object, which is the same as date.parse. Strings should be yyyy-mm-dd. Strings including a time assume a local timezone., whereas strings without time assume UTC/ 
+// to specify timezone, add +hh:mm after the time to provide the difference between UTC and the desired timezone
+
+const christmas = new Date('2023-12-25') // assumes UTC timezone if time not included
+console.log(christmas) // 2023-12-25T00:00:00.000Z - Z indicates UTC timezone, GMT+0
+const nyeLocal = new Date('2023-12-31 23:59:59') // assumes local timezone if time is included
+const nyeUTC = new Date('2023-12-31 23:59:59+00:00') // specific timezone specified (UTC)
+console.log(nyeLocal) // 2023-12-31T13:59:59.000Z - stored internally as UTC so now hours are different
+console.log(nyeUTC) // 2023-12-31T23:59:59.000Z - UTC before midnight, no longer local timezone
+
+const christmas1 = new Date('2023-12-25') // assumes UTC timezone if time not included
+console.log( christmas1.toLocaleDateString() ) // 25/12/2023 - dd/mm/yyyy if in Australia/NZ
+console.log( christmas1.toLocaleString('ko-KR', { timeZone: 'Asia/Seoul' }) ) 
+// 2023. 12. 25. 오전 9:00:00 - both timezone and language are converted to Korean
+const nyeLocal1 = new Date('2023-12-31 23:59:59') // assumes local timezone if time is included
+console.log(nyeLocal1.toLocaleString()) // 31/12/2023, 11:59:59 pm - default to local TZ
+
+
+// JSON: JavaScript Object Notationq
+const student3 = {
+    name: 'Sita',
+    age: 28,
+    courses: ['HTML', 'CSS', 'JS'],
+    occupation: null
+}
+console.log( JSON.stringify(student3) )
+//{"name":"Sita","age":28,"courses":["HTML","CSS","JS"],"occupation":null}
+
+
+// No circular references with JSON.stringify. JSON can't convert recursive structures into strings, and will throw an error if you try
+const room = {
+    number: 23
+}
+const meetup = {
+    title: "Strategy Conference",
+    participants: ['Chris', 'Tina'],
+}
+meetup.place = room; // meetup references room
+room.occupiedBy = meetup; // room references meetup
+/*JSON.stringify(meetup); // TypeError: Converting circular structure to JSON */
+
+
+// Excluding and transforming:  replacer
+console.log(JSON.stringify(meetup, ['title', 'participants'])); // just stringify the properties in the array: {"title":"Strategy Conference","participants":["Chris","Tina"]}
+
+console.log( JSON.stringify(meetup, function(key, value) {
+    if (key != '' && value == meetup) return undefined // skip references to current object
+    else if (typeof value == 'function') return value.toString() // stringify functions
+    return value // otherwise return original value unchanged
+}, 2)); // use 2 spaces for nicer formatting
+
+const room1 = {
+    number: 23, toJSON() { return this.number }
+}
+const meetup1 = {
+    title: "Strategy Conference", participants: ['Chris', 'Tina']
+}
+meetup1.place = room1; // meetup references room
+room1.occupiedBy = meetup1; // room references meetup
+console.log( JSON.stringify(meetup1) ); // no more circular references as room stringifies to 23
+// {"title":"Strategy Conference","participants":["Chris","Tina"],"place":23}
+
+
+// JSON.parse
+const meetup2 = {
+    title: "Strategy Conference", participants: ['Chris', 'Tina'], date: '2023-06-01'
+}
+const meetup2String = JSON.stringify(meetup2) // convert object to string
+const meetup2Parsed = JSON.parse(meetup2String, (key, value) => { // convert string to object
+    if ( !isNaN(Date.parse(value)) ) return new Date(value) // if valid date, create Date object
+    return value;
+})
+console.log(meetup2Parsed) // { title, participants: (as above), date: 2023-06-01T00:00:00.000Z }
+
+// JSON.parse for deep cloning
+const box1 = {
+    size: 'large',
+    dimensions: { width: 50, length: 70, height: 30, units: 'cm' },
+    items: [ 'glasses', 'plates', 'cutlery' ]
+}
+const boxString = JSON.stringify(box1) // convert object to string
+const box2 = JSON.parse(boxString) // convert string back to new object
+// how could we check to make sure both boxes are the same but independent?
