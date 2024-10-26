@@ -120,22 +120,64 @@ console.log(getGreeting2('Rikki'));
       c) Update getCatchPhrase to use arrow function syntax and a conditional operator. */
       
 const westley = {
-name: 'Westley',
-numFingers: 5
+    name: 'Westley',
+    numFingers: 5
 }
+
 const rugen = {
-name: 'Count Rugen',
-numFingers: 6
+    name: 'Count Rugen',
+    numFingers: 6
 }
+
 const inigo = {
-firstName: 'Inigo',
-greeting(person) {
-let greeting = `Hello ${person.name}, my name is ${this.firstName}. `;
-console.log(greeting + this.getCatchPhrase(person));
-},
-getCatchPhrase(person) {
-return 'Nice to meet you.';
+    firstName: 'Inigo',
+    lastName: 'Montoya',
+
+    greeting(person) {
+        let greeting = `Hello ${person.name}, my name is ${this.firstName} ${this.lastName}. `;
+
+        console.log(greeting + this.getCatchPhrase(person));
+    },
+    
+    getCatchPhrase(person) {
+        if (person += 5) {
+            return 'Nice to meet you.';
+        } else {
+            return 'YOU KILLED MY FATHER! PREPARE TO DIE!';
+        }
+    
+    }
 }
-}
-inigo.greeting(westley)
+
+ inigo.greeting(westley)
 inigo.greeting(rugen)
+
+
+
+/*7. The following object represents a basketball game and keeps track of the score as the
+game progresses.
+a) Modify each of the methods so that they can be ‘chained’ together and the last line of
+the example code works
+b) Add a new method to print the full time final score
+c) Add a new object property to keep track of the number of fouls and a method to
+increment it, similar but separate to the score. Include the foul count in the half time and
+full time console messages
+d) Test your object by chaining all the method calls together in different combinations.*/
+
+const basketballGame = {
+score: 0,
+freeThrow() {
+this.score++;
+},
+basket() {
+this.score += 2;
+},
+threePointer() {
+this.score += 3;
+},
+halfTime() {
+console.log('Halftime score is '+this.score);
+}
+}
+//modify each of the above object methods to enable function chaining as below:
+basketballGame.basket().freeThrow().freeThrow().basket().threePointer().halfTime();
