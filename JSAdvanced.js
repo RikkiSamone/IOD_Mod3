@@ -280,3 +280,4 @@ console.log(rabbit1, rabbit2); // { jumps: true } - only prints 'own' properties
 console.log(rabbit1.legs, rabbit2.legs); // 4 - inherited properties do exist
 for (let prop in rabbit1) console.log(`${prop} is ${rabbit1[prop]}`) // own properties, then inherited ones
 for (let prop in rabbit2) console.log(`${prop} is ${rabbit2[prop]}`) // own properties, then inherited ones
+
