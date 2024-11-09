@@ -153,47 +153,200 @@ inigo.greeting(rugen)
 /*7. The following object represents a basketball game and keeps track of the score as the
 game progresses.
 a) Modify each of the methods so that they can be ‘chained’ together and the last line of
-the example code works//
-
-
+the example code works
 
 b) Add a new method to print the full time final score
+
 c) Add a new object property to keep track of the number of fouls and a method to
 increment it, similar but separate to the score. Include the foul count in the half time and
 full time console messages
-d) Test your object by chaining all the method calls together in different combinations.*/
 
-//a:
+d) Test your object by chaining all the method calls together in different combinations.*/
 
 
 const basketballGame = {
     score: 0,
+    fouls: 0,       //adding foul property
+
     freeThrow() {
-        this.score++;
+        this.score++;       //increments the score by 1 for a free throw
+        return this;
     },
 
-basket() {
-    this.score += 2;
+    basket() {
+        this.score += 2;       //increments the score by 2 for a basket
+        return this;
     },
 
-threePointer() {
-    this.score += 3;
+    threePointer() {
+        this.score += 3;          //increments by 3 for a threepointer
+        return this;
     },
 
-halfTime() {
-        console.log('Halftime score is '+this.score);
-    }
-}
+    foul() {
+        this.fouls++;           //increments the foul count by 1
+        return this;
+    },
 
-printThis(){
-    console.log(this);
-    return this; 
-}
+    printhalfTime() {                    //half-time score
+        console.log(`Halftime score is ${this.score}. Fouls: ${this.fouls}`);
+        return this;
+    },
 
-printScore() {
-    console.log($(this.score}))
 
+    printFinalScore() {                         //final score
+        console.log(`Final Score is ${this.score}. Total fouls: ${this.fouls}`);
+        return this;
+    },
+
+    printThis() {   //debugs
+        console.log(this);
+        return this;
+    },
+};
+     
 
 
 //modify each of the above object methods to enable function chaining as below:
-basketballGame.basket().freeThrow().freeThrow().basket().threePointer().halfTime();
+basketballGame
+//original chain in the problem
+    .basket()
+    .freeThrow()
+    .freeThrow()
+    .basket()
+    .threePointer()
+    .printhalfTime()
+//added elements to the original chain
+    .foul()
+    .basket()
+    .threePointer()
+    .foul()
+    .threePointer()
+    .printFinalScore();
+
+
+/* 8 The object below represents a single city.
+a) Write a function that takes an object as an argument and uses a for...in loop to access
+and print to the console each of those object properties and their values. Test it using
+the sydney object below.
+
+b) Create a new object for a different city with different properties and call your function
+again with the new object.*/
+
+const sydney = {
+    name: 'Sydney',
+    population: 5_121_000,
+    state: 'NSW',
+    founded: '26 January 1788',
+    timezone: 'Australia/Sydney'
+};
+for (let key in sydney) {
+    console.log(key + ": " + sydney[key])
+}
+
+
+const kdrama = {
+    name: 'Something in the Rain',
+    released: 2018,
+    genre: "Romance",
+    lead_male: "Jung Hae-in",
+    lead_female: "Son Ye-jin",
+    rating: "9.8/10"
+}
+for (let key in kdrama) {
+    console.log("key: " + key); //prints the key properties
+    console.log("value: " + kdrama[key]); //prints just the values
+    console.log(key + ": " + kdrama[key]) //prints the key:value pair 
+}
+
+/* 9
+Use the following variables to understand how JavaScript stores objects by reference.
+a) Create a new moreSports variable equal to teamSports and add some new sport
+values to it (using push and unshift)
+
+b) Create a new dog2 variable equal to dog1 and give it a new value
+
+c) Create a new cat2 variable equal to cat1 and change its name property
+*/
+
+let teamSports = ['Hockey', 'Cricket', 'Volleyball'];
+let moreSports = teamSports;  //new moreSports variable
+moreSports.push('Soccer'); //pushing a new sports to the end of the team sports object
+moreSports.unshift("Basketball"); //adding a new sport to the beginning 
+console.log(moreSports);//[ 'Basketball', 'Hockey', 'Cricket', 'Volleyball', 'Soccer' ]
+console.log(teamSports); //[ 'Basketball', 'Hockey', 'Cricket', 'Volleyball', 'Soccer' ]
+
+
+let dog1 = 'Bingo';
+let dog2 = dog1;
+dog2 = 'Max'; //adding new value
+console.log(dog1); // Bingo
+console.log(dog2);// Max
+
+let cat1 = { name: 'Fluffy', breed: 'Siberian' };
+let cat2 = cat1;
+//cat2.name = 'Snickers';
+console.log(cat2); //{ name: 'Snickers', breed: 'Siberian' }
+
+//d) Print the original teamSports, dog1 and cat1 variables to the console. Have they changed? Why?
+
+console.log(teamSports);//[ 'Basketball', 'Hockey', 'Cricket', 'Volleyball', 'Soccer' ]; changed since I pushed and unshifted into the object
+console.log(dog1); //Bingo doesn't change because the string is stored by value and is primitive. When values are primitive, they are stored independently
+console.log(cat1); //{ name: 'Snickers', breed: 'Siberian' } It changes because cat1 points to the same memory location as cat2 and the object reference was reassigned. 
+
+//e) Change the way the moreSports and cat2 variables are created to ensure the originals remain independent 
+let teamSports2 = ['Hockey', 'Cricket', 'Volleyball'];
+let moreSports2 = teamSports2;
+moreSports2 = ['Basketball', 'Hockey', 'Cricket', 'Volleyball', 'Soccer'];
+console.log(moreSports2); //[ 'Basketball', 'Hockey', 'Cricket', 'Volleyball', 'Soccer' ]
+console.log(teamSports2); //[ 'Hockey', 'Cricket', 'Volleyball' ]
+
+cat2 = "River";
+console.log(cat2); //River
+console.log(cat1); //{ name: 'Fluffy', breed: 'Siberian' }
+
+/* 10 The following constructor function creates a new Person object with the given name and
+age values.
+a) Create a new person using the constructor function and store it in a variable
+
+b) Create a second person using different name and age values and store it in a separate
+variable
+
+c) Print out the properties of each person object to the console
+
+d) Rewrite the constructor function as a class called PersonClass and use it to create a
+third person using different name and age values. Print it to the console as well.
+
+e) Add a canDrive method to both the constructor function and the class that returns true
+if the person is old enough to drive. */
+
+function Person(name, age) {
+    this.name = name;
+    this.age = age;
+    this.human = true;
+    this.canDrive = this.age >= 16;     //adding canDrive method
+    return this;
+}
+
+
+const person1 = new Person('Rikki', 30);
+console.log(person1);
+console.log("Person 1:", person1); //printing the properties
+
+const person2 = new Person('Xander', 12);
+console.log(person2);
+console.log("Person 2:", person2); //printing the properties
+
+
+class PersonClass{
+    constructor(name, age) {
+        this.name = name;
+        this.age = age;
+        this.human = true;
+        this.canDrive = this.age >= 16;     //added CanDrivemethod
+        return this;
+    }
+}
+
+let person3 = new PersonClass('Batman', 45);
+console.log(person3);
