@@ -1,3 +1,6 @@
+/* Module 3.1 JS Fundamentals*/
+
+
 // What are the results of these expressions? (answer first, then use console.log() to check)
     //Note: My original answer is teh first comment, the console log: [result] is the answer after running the expressions
         
