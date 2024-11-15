@@ -125,17 +125,21 @@ places as below, but it’s not always useful:*/
 
 let fixedTwenty = twentyCents.toFixed(2);
 let fixedTen = tenCents.toFixed(2);
-console.log(fixedTwenty + fixedTen) //this is not working because the .toFixed method returns a string NOt a number
+console.log(fixedTwenty + fixedTen) //this is not working because the .toFixed method returns a string NOT a number
 /*
 
 a) Explain why the above code returns the wrong answer
 b) Create a function currencyAddition(float1, float2) which safely adds the two
 decimal numbers float1 and float2 and returns the correct float result. */
 
-function currencyAddition(float1, float2) {
-    return (float1 + float2);
+function currencyAddition(float1, float2) {         //converting floats to integers by multiplying by 100 and then dividing the result by 100 to return to a decimal number. 
+    const precision = 100;   
+    const result = (Math.round(float1 * precision) + Math.round(float2 * precision)) / precision;
+    return result;
 }
 console.log(currencyAddition(.5, 1.0)); //1.5
+console.log(currencyAddition(3.9, 4.2)); // 8.1
+
 
 
 /*
@@ -144,15 +148,52 @@ safely performs the given operation (either +, -, / or *) on the two numbers and
 the correct float result. https://developer.mozilla.org/en-
 US/docs/Web/JavaScript/Reference/Statements/switch may be useful. */
 
+const precise = 100; //global variable for precision
+
 function currencyOperation(float1, float2, operation) {
-    
+    switch (operation) {
+        case "+" :
+            return (Math.round(float1 * precise) + Math.round(float2 * precise)) / precise;
+            break;
+        case "-":
+            return (Math.round(float1 * precise) - Math.round(float2 * precise)) / precise;
+            break;
+        case "/":
+            return (Math.round(float1 * precise) / Math.round(float2 * precise));
+            break;
+        case "*": 
+            return (Math.round(float1 * precise) * Math.round(float2 * precise)) / (precise * precise);
+        }
 }
+console.log(currencyOperation(1.3, 2.1, "+")); //3.4
+console.log(currencyOperation(1.3, 2.1, "*")); //2.73
+console.log(currencyOperation(1.3, 2.1, "/")); //0.6190476
+console.log(currencyOperation(1.3, 2.1, "-")); //-0.8
 
 /*
 d) (Extension) Extend the above function to include a fourth argument numDecimals
 which allows the operation to support different amounts of decimal places from 1 to 10.
 HINT: Assume 2 decimal places for b) and c) and use a multiplication factor. Test with
 different values as well as the below:*/
+
+const precise1 = Math.pow(10, numDecimals);
+
+function currencyOperation(float1, float2, operation, numDecimals) {
+    switch (operation) {
+        case "+" :
+            return (Math.round(float1 * precise) + Math.round(float2 * precise)) / precise;
+            break;
+        case "-":
+            return (Math.round(float1 * precise) - Math.round(float2 * precise)) / precise;
+            break;
+        case "/":
+            return (Math.round(float1 * precise) / Math.round(float2 * precise));
+            break;
+        case "*": 
+            return (Math.round(float1 * precise) * Math.round(float2 * precise)) / (precise * precise);
+        }
+}
+
 
 //console.log(0.3 == currencyAddition(0.1, 0.2)) // true
 //console.log(0.3 == currencyOperation(0.1, 0.2, '+')) // true
